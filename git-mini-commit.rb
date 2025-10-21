@@ -1,12 +1,21 @@
 class GitMiniCommit < Formula
   desc "Git CLI extension for mini-commit workflow: local, small commits between staging and regular commit"
   homepage "https://github.com/minoru-kinugasa-105/git-mini-commit"
-  url "https://github.com/minoru-kinugasa-105/mini-commit/releases/download/v0.1.1/git-mini-commit"
-  sha256 "5c2a3bc8b85331193e97ac0276b1139cac2a2502f8e4008f88273e5e24e97ef3"
+  url "https://github.com/minoru-kinugasa-105/mini-commit/releases/download/v0.1.2/git-mini-commit-darwin-amd64"
+  sha256 "31f8df1d5e61439e8885026cf337e41d2a71dcfd4331c535513b7e3cc3386dfd"
   license "MIT"
 
+  if Hardware::CPU.arm?
+    url "https://github.com/minoru-kinugasa-105/mini-commit/releases/download/v0.1.2/git-mini-commit-darwin-arm64"
+    sha256 "73f83c45c6e08f38efc5d7e6655ccc24670b42d1a3a152a0141d82af5c4f25cd"
+  end
+
   def install
-    bin.install "git-mini-commit"
+    if Hardware::CPU.arm?
+      bin.install "git-mini-commit-darwin-arm64" => "git-mini-commit"
+    else
+      bin.install "git-mini-commit-darwin-amd64" => "git-mini-commit"
+    end
   end
 
   test do
